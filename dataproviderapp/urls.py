@@ -14,7 +14,7 @@ router.register(r'state',views.StateViewSet)
 router.register(r'city',views.CityViewSet)
 router.register(r'properties',views.PropertyViewSet)
 router.register(r'propertytype',views.PropertyTypeViewSet)
-router.register(r'propertystatus',views.PropertyStatuViewSet)
+router.register(r'propertystatus',views.PropertyStatusViewSet)
 #Changes done in URL File
 #
 urlpatterns = [
