@@ -15,6 +15,7 @@ router.register(r'city',views.CityViewSet)
 router.register(r'properties',views.PropertyViewSet)
 router.register(r'propertytype',views.PropertyTypeViewSet)
 router.register(r'propertystatus',views.PropertyStatuViewSet)
+#Changes done in URL File
 #
 urlpatterns = [
   url(r'^admin/', admin.site.urls),
