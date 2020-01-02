@@ -1,0 +1,10 @@
+[tool]
+[tool.poetry]
+authors = ["Your Name <you@example.com>"]
+name = "root"
+version = "0.0.0"
+[tool.poetry.dependencies]
+django-cors-headers = "==3.1.1"
+djangorestframework = "==3.10.3"
+djangorestframework-jwt = "*"
+python = "^3.7"

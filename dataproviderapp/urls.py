@@ -13,6 +13,8 @@ router.register(r'country',views.CountryViewSet)
 router.register(r'state',views.StateViewSet)
 router.register(r'city',views.CityViewSet)
 router.register(r'properties',views.PropertyViewSet)
+router.register(r'propertytype',views.PropertyTypeViewSet)
+router.register(r'propertystatus',views.PropertyStatuViewSet)
 #
 urlpatterns = [
   url(r'^admin/', admin.site.urls),
