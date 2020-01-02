@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import UserProfile, Country, State, City, Property
+from .models import *
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -91,3 +91,13 @@ class PropertySerializer(serializers.ModelSerializer):
 		fields = ["ID","Name","Description","No_Of_BedRooms",
 					"No_Of_BathRooms","No_Of_Floors","Country",
 					"State","City","Property_Status","Property_Type"]
+
+class PropertyTypeSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = PropertyType
+		fields = ["ID","Name"]
+
+class PropertyStatusSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = PropertyStatus
+		fields = ["ID","Name"]

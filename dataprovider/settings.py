@@ -25,7 +25,7 @@ SECRET_KEY = '87f0f(=_^om^#-*k@%&q@1=od_innqb^@#8-$=d@#!i2czerv8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -139,8 +139,5 @@ JWT_AUTH = {
 }
 
 CORS_ORIGIN_WHITELIST = [
-    "https://angular-7-and-django-rest-framework-jwt.stackblitz.io",
-    "https://goldenstriker.github.io",
-    'https://angular-8-registration-login-example-93z9mv.stackblitz.io',
-	'http://localhost:4200'
+    "https://srepfrontend111.stackblitz.io"
 ]

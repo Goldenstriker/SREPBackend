@@ -95,6 +95,16 @@ class PropertyViewSet(viewsets.ModelViewSet):
 	queryset = Property.objects.all()
 	serializer_class = PropertySerializer
 
+class PropertyTypeViewSet(viewsets.ModelViewSet):
+	permission_classes = [permissions.IsAuthenticated]
+	queryset = PropertyType.objects.all()
+	serializer_class = PropertyTypeSerializer
+
+class PropertyStatusViewSet(viewsets.ModelViewSet):
+	permission_classes = [permissions.IsAuthenticated]
+	queryset = PropertyStatus.objects.all()
+	serializer_class = PropertyStatusSerializer
+
 
 
 
