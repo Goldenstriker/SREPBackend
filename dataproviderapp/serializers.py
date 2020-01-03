@@ -85,7 +85,7 @@ class CitySerializer(serializers.ModelSerializer):
 		fields = ["City_ID","Name","State"]
 
 class PropertySerializer(serializers.ModelSerializer):
-	City = StateSerializer()
+	#City = StateSerializer()
 	class Meta:
 		model = Property
 		fields = ["ID","Name","Description","No_Of_BedRooms",
