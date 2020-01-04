@@ -31,7 +31,7 @@ class CreateUserSerializer(serializers.HyperlinkedModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
 		#print(user)
-        print(user)
+        #print(user)
         #UserProfile.objects.create(user=user)
         #user.userprofile.save()
         return user
