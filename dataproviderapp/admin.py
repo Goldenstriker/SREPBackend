@@ -76,6 +76,13 @@ class PropertyStatusAdmin(admin.ModelAdmin):
 	list_display=("Name",)
 	ordering = ("Name",)
 	search_fields = ("Name",)
+
+#PropertyPurpose
+@admin.register(PropertyPurpose)
+class PropertyPurposeAdmin(admin.ModelAdmin):
+	list_display=("Name",)
+	ordering = ("Name",)
+	search_fields = ("Name",)
 	
 class CustomPropertyAdminForm(forms.ModelForm):
 	Country = CustomModelChoiceField(queryset=Country.objects.all()) 
@@ -83,6 +90,7 @@ class CustomPropertyAdminForm(forms.ModelForm):
 	City = CustomModelChoiceField(queryset=City.objects.all())
 	Property_Type = CustomModelChoiceField(queryset=PropertyType.objects.all())
 	Property_Status = CustomModelChoiceField(queryset=PropertyStatus.objects.all())
+	Property_Purpose = CustomModelChoiceField(queryset=PropertyPurpose.objects.all())
 	UserCreatedBy = CustomModelChoiceField(queryset=User.objects.all())
 	class Meta:
 		model = Property
