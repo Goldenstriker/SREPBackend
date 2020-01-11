@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
+from datetime import datetime
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
@@ -69,8 +70,14 @@ class Property(models.Model):
   Property_Type=models.ForeignKey(PropertyType,on_delete=models.PROTECT)
   Property_Status=models.ForeignKey(PropertyStatus,on_delete=models.PROTECT)
   No_Of_BedRooms = models.IntegerField(db_column='No_Of_BedRooms')
+  No_Of_LivingRooms = models.IntegerField(db_column='No_Of_LivingRooms')
   No_Of_BathRooms = models.IntegerField(db_column='No_Of_BathRooms')
   No_Of_Floors = models.IntegerField(db_column='No_Of_Floors')
   Description = models.CharField(max_length=500)
+  Address = models.CharField(max_length=500)
+  AreaSqFt = models.FloatField()
+  Price = models.FloatField()
+  UserCreatedBy = models.OneToOneField(User,on_delete=models.CASCADE)
+  UserCreatedDate = models.DateField( default= datetime.today)
   class Meta:
     db_table="Property"

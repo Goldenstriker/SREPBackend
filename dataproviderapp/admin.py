@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
 from django import forms
 from .models import *
 # Register your models here.
@@ -21,6 +22,8 @@ class CountryAdmin(admin.ModelAdmin):
 #admin.site.register(State)
 class CustomModelChoiceField(forms.ModelChoiceField):
 	def label_from_instance(self, obj):
+		if (isinstance(obj, User)):
+			return "%s" % (obj.username)
 		return "%s" % (obj.Name)
 
 class CustomStateAdminForm(forms.ModelForm):
@@ -80,16 +83,23 @@ class CustomPropertyAdminForm(forms.ModelForm):
 	City = CustomModelChoiceField(queryset=City.objects.all())
 	Property_Type = CustomModelChoiceField(queryset=PropertyType.objects.all())
 	Property_Status = CustomModelChoiceField(queryset=PropertyStatus.objects.all())
+	UserCreatedBy = CustomModelChoiceField(queryset=User.objects.all())
 	class Meta:
 		model = Property
-		fields = ["Name","Description","No_Of_BedRooms",
-					"No_Of_BathRooms","No_Of_Floors",]
+		fields = ["Name","Description","Address",
+					"No_Of_BedRooms",
+					"No_Of_LivingRooms",
+					"No_Of_BathRooms","No_Of_Floors",
+					"AreaSqFt","Price", "UserCreatedDate"]
 
 @admin.register(Property)
 class PropertyAdmin(admin.ModelAdmin):
-	list_display=("ID","Name","Description","No_Of_BedRooms",
+	list_display=("ID","Name","Description","Address",
+					"No_Of_BedRooms",
+					"No_Of_LivingRooms",
 					"No_Of_BathRooms","No_Of_Floors","Country__Name",
-					"State__Name","City__Name","PropertyStatus__Name","PropertyType__Name")
+					"State__Name","City__Name","PropertyStatus__Name","PropertyType__Name",
+					"AreaSqFt","Price", "UserCreatedBy","UserCreatedDate")
 	ordering = ("Name",)
 	search_fields = ("Name",)
 	form = CustomPropertyAdminForm
