@@ -61,6 +61,12 @@ class PropertyStatus(models.Model):
   class Meta:
     db_table="PropertyStatus"
 	
+class PropertyPurpose(models.Model):
+  ID = models.AutoField(auto_created=True,primary_key=True,serialize=False,verbose_name="ID")
+  Name = models.CharField(max_length=255)
+  class Meta:
+    db_table="PropertyPurpose"
+	
 class Property(models.Model):
   ID = models.AutoField(auto_created=True,primary_key=True,serialize=False,verbose_name="ID")
   Name = models.CharField(max_length=255)
@@ -69,6 +75,7 @@ class Property(models.Model):
   City = models.ForeignKey(City,on_delete=models.PROTECT)
   Property_Type=models.ForeignKey(PropertyType,on_delete=models.PROTECT)
   Property_Status=models.ForeignKey(PropertyStatus,on_delete=models.PROTECT)
+  Property_Purpose=models.ForeignKey(PropertyPurpose,on_delete=models.PROTECT)
   No_Of_BedRooms = models.IntegerField(db_column='No_Of_BedRooms')
   No_Of_LivingRooms = models.IntegerField(db_column='No_Of_LivingRooms')
   No_Of_BathRooms = models.IntegerField(db_column='No_Of_BathRooms')

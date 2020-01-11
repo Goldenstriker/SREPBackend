@@ -31,7 +31,7 @@ class CreateUserSerializer(serializers.HyperlinkedModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
 		#print(user)
-        #print(user)
+        print(user)
         #UserProfile.objects.create(user=user)
         #user.userprofile.save()
         return user
@@ -67,6 +67,17 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ['url', 'name']
 
+class PropertyTypeSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = PropertyType
+		fields = ["ID","Name"]
+
+class PropertyStatusSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = PropertyStatus
+		fields = ["ID","Name"]
+
+
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
@@ -85,19 +96,8 @@ class CitySerializer(serializers.ModelSerializer):
 		fields = ["City_ID","Name","State"]
 
 class PropertySerializer(serializers.ModelSerializer):
-	#City = StateSerializer()
 	class Meta:
 		model = Property
 		fields = ["ID","Name","Description","No_Of_BedRooms",
 					"No_Of_BathRooms","No_Of_Floors","Country",
 					"State","City","Property_Status","Property_Type"]
-
-class PropertyTypeSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = PropertyType
-		fields = ["ID","Name"]
-
-class PropertyStatusSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = PropertyStatus
-		fields = ["ID","Name"]

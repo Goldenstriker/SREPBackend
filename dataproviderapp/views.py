@@ -105,6 +105,9 @@ class PropertyStatusViewSet(viewsets.ModelViewSet):
 	queryset = PropertyStatus.objects.all()
 	serializer_class = PropertyStatusSerializer
 
-
-
-
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def recommend(request):
+	all_combined_data = [ ' '.join(map(str,x)) for x in Property.objects.values_list()]
+	print(all_combined_data)
+	return JsonResponse({'user': 123})

@@ -15,7 +15,6 @@ router.register(r'city',views.CityViewSet)
 router.register(r'properties',views.PropertyViewSet)
 router.register(r'propertytype',views.PropertyTypeViewSet)
 router.register(r'propertystatus',views.PropertyStatusViewSet)
-#Changes done in URL File
 #
 urlpatterns = [
   url(r'^admin/', admin.site.urls),
@@ -25,5 +24,6 @@ urlpatterns = [
   path(r'api-token-refresh/', refresh_jwt_token),
   path(r'current_user/',views.current_user),
   path(r'set_user_status/<int:userid>',views.set_user_status),
+  path(r'recommend/',views.recommend)
 ]
 
