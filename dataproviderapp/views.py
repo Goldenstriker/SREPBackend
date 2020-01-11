@@ -105,10 +105,10 @@ class PropertyStatusViewSet(viewsets.ModelViewSet):
 	queryset = PropertyStatus.objects.all()
 	serializer_class = PropertyStatusSerializer
 
-class PropertyStatusViewSet(viewsets.ModelViewSet):
+class PropertyPurposeViewSet(viewsets.ModelViewSet):
 	permission_classes = [permissions.IsAuthenticated]
-	queryset = PropertyStatus.objects.all()
-	serializer_class = PropertyStatusSerializer
+	queryset = PropertyPurpose.objects.all()
+	serializer_class = PropertyPurposeSerializer
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
