@@ -105,6 +105,11 @@ class PropertyStatusViewSet(viewsets.ModelViewSet):
 	queryset = PropertyStatus.objects.all()
 	serializer_class = PropertyStatusSerializer
 
+class PropertyStatusViewSet(viewsets.ModelViewSet):
+	permission_classes = [permissions.IsAuthenticated]
+	queryset = PropertyStatus.objects.all()
+	serializer_class = PropertyStatusSerializer
+
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def recommend(request):

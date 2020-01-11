@@ -77,6 +77,11 @@ class PropertyStatusSerializer(serializers.ModelSerializer):
 		model = PropertyStatus
 		fields = ["ID","Name"]
 
+class PropertyPurposeSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = PropertyPurpose
+		fields = ["ID","Name"]
+
 
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
@@ -99,5 +104,6 @@ class PropertySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Property
 		fields = ["ID","Name","Description","No_Of_BedRooms",
+    "No_Of_LivingRooms",
 					"No_Of_BathRooms","No_Of_Floors","Country",
-					"State","City","Property_Status","Property_Type"]
+					"State","City","Property_Status","Property_Type","Property_Purpose","Price","AreaSqFt","Address","UserCreatedBy","UserCreatedDate"]

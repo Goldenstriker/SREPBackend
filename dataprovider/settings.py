@@ -139,8 +139,5 @@ JWT_AUTH = {
 }
 
 CORS_ORIGIN_WHITELIST = [
-    "https://angular-7-and-django-rest-framework-jwt.stackblitz.io",
-    "https://goldenstriker.github.io",
-    'https://angular-8-registration-login-example-93z9mv.stackblitz.io',
-	'http://localhost:4200'
+	'https://srepfrontend111.stackblitz.io'
 ]
