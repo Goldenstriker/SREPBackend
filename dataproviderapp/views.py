@@ -105,6 +105,10 @@ class PropertyStatusViewSet(viewsets.ModelViewSet):
 	queryset = PropertyStatus.objects.all()
 	serializer_class = PropertyStatusSerializer
 
+def recommendproperty(request, str):
+  
+  return render(request, 'main/index.html')
+
 
 
 

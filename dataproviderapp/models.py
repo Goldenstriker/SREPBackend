@@ -69,8 +69,13 @@ class Property(models.Model):
   Property_Type=models.ForeignKey(PropertyType,on_delete=models.PROTECT)
   Property_Status=models.ForeignKey(PropertyStatus,on_delete=models.PROTECT)
   No_Of_BedRooms = models.IntegerField(db_column='No_Of_BedRooms')
+  No_Of_LivingRooms = models.IntegerField(db_column='No_Of_LivingRooms')
   No_Of_BathRooms = models.IntegerField(db_column='No_Of_BathRooms')
   No_Of_Floors = models.IntegerField(db_column='No_Of_Floors')
   Description = models.CharField(max_length=500)
+  Address = models.CharField(max_length=500)
+  AreaSqFt = models.FloatField()
+  Price = models.FloatField()
+  user = models.OneToOneField(User,on_delete=models.CASCADE)
   class Meta:
     db_table="Property"
