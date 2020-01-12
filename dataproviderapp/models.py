@@ -84,7 +84,7 @@ class Property(models.Model):
   Address = models.CharField(max_length=500)
   AreaSqFt = models.FloatField()
   Price = models.FloatField()
-  UserCreatedBy = models.OneToOneField(User,on_delete=models.CASCADE)
+  UserCreatedBy = models.ForeignKey(User,on_delete=models.PROTECT)
   UserCreatedDate = models.DateField( default= datetime.today)
   class Meta:
     db_table="Property"
