@@ -16,6 +16,7 @@ router.register(r'properties',views.PropertyViewSet)
 router.register(r'propertytype',views.PropertyTypeViewSet)
 router.register(r'propertystatus',views.PropertyStatusViewSet)
 router.register(r'propertypurpose',views.PropertyPurposeViewSet)
+#router.register(r'property',views.PropertyFilterViewSet)
 #
 urlpatterns = [
   url(r'^admin/', admin.site.urls),
@@ -25,6 +26,7 @@ urlpatterns = [
   path(r'api-token-refresh/', refresh_jwt_token),
   path(r'current_user/',views.current_user),
   path(r'set_user_status/<int:userid>',views.set_user_status),
-  path(r'recommend/',views.recommend)
+  path(r'recommend/',views.recommend),
+  path(r'property/',views.PropertyFilterViewSet.as_view())
 ]
 

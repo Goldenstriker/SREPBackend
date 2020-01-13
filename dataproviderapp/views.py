@@ -9,7 +9,7 @@ from rest_framework import viewsets, permissions
 from rest_framework.decorators import api_view,permission_classes
 from django.http import JsonResponse
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, filters, generics 
 from .models import UserProfile, Country
 
 def index(request):
@@ -116,3 +116,10 @@ def recommend(request):
 	all_combined_data = [ ' '.join(map(str,x)) for x in Property.objects.values_list()]
 	print(all_combined_data)
 	return JsonResponse({'user': 123})
+
+class PropertyFilterViewSet(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['UserCreatedBy__id', 'Name']
