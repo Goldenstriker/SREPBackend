@@ -122,4 +122,4 @@ class PropertyFilterViewSet(generics.ListCreateAPIView):
     queryset = Property.objects.all()
     serializer_class = PropertySerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['UserCreatedBy__id', 'Name']
+    search_fields = ['UserCreatedBy__id', 'Name','Description','Address','City__Name','State__Name','Price','Property_Purpose__Name']
