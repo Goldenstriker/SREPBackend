@@ -27,6 +27,7 @@ urlpatterns = [
   path(r'current_user/',views.current_user),
   path(r'set_user_status/<int:userid>',views.set_user_status),
   path(r'recommend/',views.recommend),
-  path(r'property/',views.PropertyFilterViewSet.as_view())
+  path(r'property/',views.PropertyFilterViewSet.as_view()),
+  path(r'propertyforuser/',views.PropertyBasedOnUserViewSet.as_view()),
 ]
 
