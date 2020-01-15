@@ -107,3 +107,17 @@ class PropertySerializer(serializers.ModelSerializer):
     "No_Of_LivingRooms",
 					"No_Of_BathRooms","No_Of_Floors","Country",
 					"State","City","Property_Status","Property_Type","Property_Purpose","Price","AreaSqFt","Address","UserCreatedBy","UserCreatedDate"]
+
+class PropertyDetailSerializer(serializers.ModelSerializer):
+    Country = CountrySerializer()
+    State = StateSerializer()
+    City = CitySerializer()
+    Property_Purpose = PropertyPurposeSerializer()
+    Property_Type = PropertyTypeSerializer()
+    Property_Status = PropertyStatusSerializer()
+    class Meta:
+      model = Property
+      fields = ["ID","Name","Description","No_Of_BedRooms",
+      "No_Of_LivingRooms",
+            "No_Of_BathRooms","No_Of_Floors","Country",
+            "State","City","Property_Status","Property_Type","Property_Purpose","Price","AreaSqFt","Address","UserCreatedBy","UserCreatedDate"]

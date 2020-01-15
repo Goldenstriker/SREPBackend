@@ -120,7 +120,7 @@ def recommend(request):
 class PropertyFilterViewSet(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Property.objects.all()
-    serializer_class = PropertySerializer
+    serializer_class = PropertyDetailSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['UserCreatedBy__id', 'Name','Description','Address','City__Name','State__Name','Price','Property_Purpose__Name']
 
