@@ -4,11 +4,26 @@ from django import forms
 from .models import *
 # Register your models here.
 #admin.site.register(UserProfile)
+
+class CustomModelChoiceField(forms.ModelChoiceField):
+	def label_from_instance(self, obj):
+		if (isinstance(obj, User)):
+			return "%s" % (obj.username)
+		return "%s" % (obj.Name)
+
+
+class CustomUserProfileAdminForm(forms.ModelForm):
+	LikedProperties = CustomModelChoiceField(queryset=Property.objects.all()) 
+	class Meta:
+		model = UserProfile
+		fields = ["user","is_online"]
+
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-	list_display=("user","is_online",)
-	ordering = ("user",)
-	search_fields = ("user",)
+  list_display =("user","is_online",)
+  ordering = ("user",)
+  search_fields = ("user",)
+  form = CustomUserProfileAdminForm
 
 
 #admin.site.register(Country)
@@ -20,11 +35,7 @@ class CountryAdmin(admin.ModelAdmin):
 
 
 #admin.site.register(State)
-class CustomModelChoiceField(forms.ModelChoiceField):
-	def label_from_instance(self, obj):
-		if (isinstance(obj, User)):
-			return "%s" % (obj.username)
-		return "%s" % (obj.Name)
+
 
 class CustomStateAdminForm(forms.ModelForm):
 	Country = CustomModelChoiceField(queryset=Country.objects.all()) 
