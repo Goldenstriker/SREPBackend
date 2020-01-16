@@ -5,9 +5,7 @@ from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 from datetime import datetime
 
-class UserProfile(models.Model):
-	user = models.OneToOneField(User, on_delete = models.CASCADE)
-	is_online = models.BooleanField(default=False)
+
 	
 
 @receiver(user_logged_in, sender = User)
@@ -88,3 +86,8 @@ class Property(models.Model):
   UserCreatedDate = models.DateField( default= datetime.today)
   class Meta:
     db_table="Property"
+
+class UserProfile(models.Model):
+  user = models.OneToOneField(User, on_delete = models.CASCADE)
+  is_online = models.BooleanField(default=False)
+  LikedProperties = models.ManyToManyField(Property)
