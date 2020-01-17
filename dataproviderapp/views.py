@@ -63,7 +63,7 @@ def current_user(request):
     serializer = ""
     try:
         userProfile = UserProfile.objects.get(user = user)
-        serializer = UserProfileStatusSerializer(userProfile)
+        serializer = UserProfileSerializer(userProfile)
     except UserProfile.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     return JsonResponse({'user':user.username, 'user_id': user.id,"userprofile":serializer.data })
