@@ -5,7 +5,7 @@ from .models import *
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ['user', 'is_online']
+        fields = ['user', 'is_online',"LikedProperties"]
 
 
 class UserProfileStatusSerializer(serializers.ModelSerializer):

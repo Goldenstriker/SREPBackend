@@ -130,3 +130,11 @@ class PropertyBasedOnUserViewSet(generics.ListCreateAPIView):
     serializer_class = PropertySerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['UserCreatedBy__id']
+
+
+class UserProfileViewSet(generics.ListCreateAPIView):
+  permission_classes = [permissions.IsAuthenticated]
+  queryset = UserProfile.objects.all()
+  serializer_class = UserProfileSerializer
+  filter_backends = [filters.SearchFilter]
+  search_fields = ['UserCreatedBy__id']

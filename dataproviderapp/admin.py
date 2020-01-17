@@ -11,20 +11,11 @@ class CustomModelChoiceField(forms.ModelChoiceField):
 			return "%s" % (obj.username)
 		return "%s" % (obj.Name)
 
-
-class CustomUserProfileAdminForm(forms.ModelForm):
-	LikedProperties = CustomModelChoiceField(queryset=Property.objects.all()) 
-	class Meta:
-		model = UserProfile
-		fields = ["user","is_online"]
-
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
   list_display =("user","is_online",)
   ordering = ("user",)
   search_fields = ("user",)
-  form = CustomUserProfileAdminForm
-
 
 #admin.site.register(Country)
 @admin.register(Country)
