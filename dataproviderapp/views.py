@@ -60,7 +60,13 @@ class GroupViewSet(viewsets.ModelViewSet):
 @permission_classes([permissions.IsAuthenticated])
 def current_user(request):
     user = request.user
-    return JsonResponse({'user':user.username, 'user_id': user.id })
+    serializer = ""
+    try:
+        userProfile = UserProfile.objects.get(user = user)
+        serializer = UserProfileStatusSerializer(userProfile)
+    except UserProfile.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    return JsonResponse({'user':user.username, 'user_id': user.id,"userprofile":serializer.data })
 	
 @api_view(['PUT'])
 @permission_classes([permissions.IsAuthenticated])
@@ -137,4 +143,4 @@ class UserProfileViewSet(generics.ListCreateAPIView):
   queryset = UserProfile.objects.all()
   serializer_class = UserProfileSerializer
   filter_backends = [filters.SearchFilter]
-  search_fields = ['UserCreatedBy__id']
+  search_fields = ['user__id']
