@@ -138,9 +138,8 @@ class PropertyBasedOnUserViewSet(generics.ListCreateAPIView):
     search_fields = ['UserCreatedBy__id']
 
 
-class UserProfileViewSet(generics.ListCreateAPIView):
+class UserProfileViewSet(viewsets.ModelViewSet):
   permission_classes = [permissions.IsAuthenticated]
   queryset = UserProfile.objects.all()
   serializer_class = UserProfileSerializer
-  filter_backends = [filters.SearchFilter]
-  search_fields = ['user__id']
+  lookup_field = 'user'

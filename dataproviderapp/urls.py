@@ -16,7 +16,7 @@ router.register(r'properties',views.PropertyViewSet)
 router.register(r'propertytype',views.PropertyTypeViewSet)
 router.register(r'propertystatus',views.PropertyStatusViewSet)
 router.register(r'propertypurpose',views.PropertyPurposeViewSet)
-
+router.register(r'userprofile',views.UserProfileViewSet)
 urlpatterns = [
   url(r'^admin/', admin.site.urls),
   path('',views.index,name='index'),
@@ -28,6 +28,6 @@ urlpatterns = [
   path(r'recommend/',views.recommend),
   path(r'property/',views.PropertyFilterViewSet.as_view()),
   path(r'propertyforuser/',views.PropertyBasedOnUserViewSet.as_view()),
-  path(r'userprofile/',views.UserProfileViewSet.as_view()),
+  #path(r'userprofile/',views.UserProfileViewSet.as_view()),
 ]
 
