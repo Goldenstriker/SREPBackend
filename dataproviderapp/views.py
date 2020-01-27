@@ -11,6 +11,7 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status, filters, generics 
 from .models import UserProfile, Country
+import pickle
 
 def index(request):
 	#userlist = User.objects.all().select_related('userprofile')
