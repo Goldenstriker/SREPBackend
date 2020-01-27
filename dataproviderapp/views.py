@@ -119,7 +119,7 @@ class PropertyPurposeViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def recommend(request):
-	all_combined_data = [ ' '.join(map(str,x)) for x in Property.objects.values_list()]
+	all_combined_data = [ (x,' '.join(map(str,x))) for x in Property.objects.values_list()]
 	print(all_combined_data)
 	return JsonResponse({'user': 123})
 
@@ -143,3 +143,6 @@ class UserProfileViewSet(viewsets.ModelViewSet):
   queryset = UserProfile.objects.all()
   serializer_class = UserProfileSerializer
   lookup_field = 'user'
+
+def predictSalePrice(request):
+  return ""
