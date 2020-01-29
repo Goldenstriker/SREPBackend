@@ -120,9 +120,12 @@ class PropertyPurposeViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def recommend(request):
-  data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City', 'City_id', 'Country', 'Country_id', 'Description', 'ID', 'Name', 'No_Of_BathRooms', 'No_Of_BedRooms', 'No_Of_Floors', 'No_Of_LivingRooms', 'Price', 'Property_Purpose', 'Property_Status', 'Property_Type', 'State', 'UserCreatedBy', 'UserCreatedDate'))
-  print(data)
-  return JsonResponse({'user': 123})
+  data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City', 'Country',  'Description', 'ID', 'Name', 'No_Of_BathRooms', 'No_Of_BedRooms', 'No_Of_Floors', 'No_Of_LivingRooms', 'Price', 'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State', 'UserCreatedBy', 'UserCreatedDate'))
+  property_purpose = data["Property_Purpose__Name"].value_counts()
+  property_type= data["Property_Type__Name"].value_counts()
+  #return JsonResponse({"PropertyPurpose":property_purpose.to_json(),"PropertyType":property_type.to_json()},safe=False)
+  print(type(property_type.to_json()))
+  return JsonResponse([property_type.to_json(), property_purpose.to_json()],safe=False)
 
 class PropertyFilterViewSet(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -152,3 +155,12 @@ def predictSalePrice(request):
             2.000000e+00]]))
   return JsonResponse({'user': model.predict([[1.921320e+03, 6.000000e+00, 4.000000e+00, 2.000000e+00,
             2.000000e+00]])[0]})
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def chartdata(request):
+  data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City', 'Country',  'Description', 'ID', 'Name', 'No_Of_BathRooms', 'No_Of_BedRooms', 'No_Of_Floors', 'No_Of_LivingRooms', 'Price', 'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State', 'UserCreatedBy', 'UserCreatedDate'))
+  property_purpose = data["Property_Purpose__Name"].value_counts()
+  property_type= data["Property_Type__Name"].value_counts()
+  return JsonResponse([property_type.to_json(), property_purpose.to_json()],safe=False)
