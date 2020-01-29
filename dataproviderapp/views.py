@@ -163,4 +163,4 @@ def chartdata(request):
   data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City', 'Country',  'Description', 'ID', 'Name', 'No_Of_BathRooms', 'No_Of_BedRooms', 'No_Of_Floors', 'No_Of_LivingRooms', 'Price', 'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State', 'UserCreatedBy', 'UserCreatedDate'))
   property_purpose = data["Property_Purpose__Name"].value_counts()
   property_type= data["Property_Type__Name"].value_counts()
-  return JsonResponse([property_type.to_json(), property_purpose.to_json()],safe=False)
+  return JsonResponse({"property_type":property_type.to_json(),"property_purpose": property_purpose.to_json()},safe=False)
