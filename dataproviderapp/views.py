@@ -146,8 +146,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
   lookup_field = 'user'
 
 def predictSalePrice(request):
-  salePricePrediction = open("dataproviderapp/trainedmodels/sale_price_prediction.pkl",'wb')
-  model = pickle.load(salePricePrediction)
-  salePricePrediction.close()
+  file = open("dataproviderapp/trainedmodels/sale_price_prediction.pkl",'rb')
+  model = pickle.load(file)
   return model.predict([[1.921320e+03, 6.000000e+00, 4.000000e+00, 2.000000e+00,
             2.000000e+00]])
