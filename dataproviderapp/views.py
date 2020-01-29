@@ -11,7 +11,7 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status, filters, generics 
 from .models import UserProfile, Country
-import pickle
+import pickle, sklearn, pandas as pd
 
 def index(request):
 	#userlist = User.objects.all().select_related('userprofile')
@@ -120,9 +120,9 @@ class PropertyPurposeViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def recommend(request):
-	all_combined_data = [ (x,' '.join(map(str,x))) for x in Property.objects.values_list()]
-	print(all_combined_data)
-	return JsonResponse({'user': 123})
+  data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City', 'City_id', 'Country', 'Country_id', 'Description', 'ID', 'Name', 'No_Of_BathRooms', 'No_Of_BedRooms', 'No_Of_Floors', 'No_Of_LivingRooms', 'Price', 'Property_Purpose', 'Property_Status', 'Property_Type', 'State', 'UserCreatedBy', 'UserCreatedDate'))
+  print(data)
+  return JsonResponse({'user': 123})
 
 class PropertyFilterViewSet(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -148,5 +148,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 def predictSalePrice(request):
   file = open("dataproviderapp/trainedmodels/sale_price_prediction.pkl",'rb')
   model = pickle.load(file)
-  return model.predict([[1.921320e+03, 6.000000e+00, 4.000000e+00, 2.000000e+00,
-            2.000000e+00]])
+  print(model.predict([[1.921320e+03, 6.000000e+00, 4.000000e+00, 2.000000e+00,
+            2.000000e+00]]))
+  return JsonResponse({'user': model.predict([[1.921320e+03, 6.000000e+00, 4.000000e+00, 2.000000e+00,
+            2.000000e+00]])[0]})
