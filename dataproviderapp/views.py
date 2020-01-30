@@ -12,6 +12,8 @@ from rest_framework.response import Response
 from rest_framework import status, filters, generics 
 from .models import UserProfile, Country
 import pickle, sklearn, pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 def index(request):
 	#userlist = User.objects.all().select_related('userprofile')
@@ -121,11 +123,12 @@ class PropertyPurposeViewSet(viewsets.ModelViewSet):
 @permission_classes([permissions.IsAuthenticated])
 def recommend(request):
   data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City', 'Country',  'Description', 'ID', 'Name', 'No_Of_BathRooms', 'No_Of_BedRooms', 'No_Of_Floors', 'No_Of_LivingRooms', 'Price', 'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State', 'UserCreatedBy', 'UserCreatedDate'))
-  property_purpose = data["Property_Purpose__Name"].value_counts()
-  property_type= data["Property_Type__Name"].value_counts()
-  #return JsonResponse({"PropertyPurpose":property_purpose.to_json(),"PropertyType":property_type.to_json()},safe=False)
+  cv = CountVectorizer()
+  count_matrix = cv.fit_transform(data['comb'])
+  # creating a similarity score matrix
+  sim = cosine_similarity(count_matrix)
   print(type(property_type.to_json()))
-  return JsonResponse([property_type.to_json(), property_purpose.to_json()],safe=False)
+  return JsonResponse([1,2],safe=False)
 
 class PropertyFilterViewSet(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -160,7 +163,9 @@ def predictSalePrice(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def chartdata(request):
-  data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City', 'Country',  'Description', 'ID', 'Name', 'No_Of_BathRooms', 'No_Of_BedRooms', 'No_Of_Floors', 'No_Of_LivingRooms', 'Price', 'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State', 'UserCreatedBy', 'UserCreatedDate'))
+  data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City__Name', 'Country',  'Description', 'ID', 'Name', 'No_Of_BathRooms', 'No_Of_BedRooms', 'No_Of_Floors', 'No_Of_LivingRooms', 'Price', 'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State', 'UserCreatedBy', 'UserCreatedDate'))
+  city_count = data["City__Name"].value_counts()
   property_purpose = data["Property_Purpose__Name"].value_counts()
   property_type= data["Property_Type__Name"].value_counts()
-  return JsonResponse({"property_type":property_type.to_json(),"property_purpose": property_purpose.to_json()},safe=False)
+  property_status = data["Property_Status__Name"].value_counts()
+  return JsonResponse({"property_type":property_type.to_json(),"property_purpose": property_purpose.to_json(),"property_status":property_status.to_json(),"city_count":city_count.to_json()},safe=False)
