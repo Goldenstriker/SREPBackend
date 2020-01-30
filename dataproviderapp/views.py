@@ -122,27 +122,30 @@ class PropertyPurposeViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def recommend(request):
-  data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City', 'Country',  'Description', 'ID', 'Name', 'No_Of_BathRooms', 'No_Of_BedRooms', 'No_Of_Floors', 'No_Of_LivingRooms', 'Price', 'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State', 'UserCreatedBy', 'UserCreatedDate'))
+  data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City__Name', 'Country__Name', 'Name', 'Price', 'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State__Name'))
   data["Combination"] = data.astype(str).apply(' '.join, axis=1)
   print(data["Combination"])
+  data.to_csv("data.csv")
   cv = CountVectorizer()
   count_matrix = cv.fit_transform(data['Combination'])
   # creating a similarity score matrix
   sim = cosine_similarity(count_matrix)
+  print(sim)
   # getting the index of the movie in the dataframe
-  i = data.loc[data.Combination.str.contains('Mumbai',case=False)].index[0]
-
+  #i = data.loc[data.Combination.str.contains('Available',case=False)].index[0]
+  i = data.loc[data["Property_Status__Name"]=='Available'].index[0]
+  print(i)
   # fetching the row containing similarity scores of the movie
   # from similarity matrix and enumerate it
   lst = list(enumerate(sim[i]))
 
   # sorting this list in decreasing order based on the similarity score
   lst = sorted(lst, key = lambda x:x[1] ,reverse=True)
-
+  print(lst)
   # taking top 1- movie scores
   # not taking the first index since it is the same movie
-  lst = lst[1:11]
-
+  lst = lst[1:5]
+  
   # making an empty list that will containg all 10 movie recommendations
   l = []
   for i in range(len(lst)):
@@ -171,13 +174,14 @@ class UserProfileViewSet(viewsets.ModelViewSet):
   serializer_class = UserProfileSerializer
   lookup_field = 'user'
 
-def predictSalePrice(request):
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def predictSalePrice(request,data):
   file = open("dataproviderapp/trainedmodels/sale_price_prediction.pkl",'rb')
   model = pickle.load(file)
   print(model.predict([[1.921320e+03, 6.000000e+00, 4.000000e+00, 2.000000e+00,
             2.000000e+00]]))
-  return JsonResponse({'user': model.predict([[1.921320e+03, 6.000000e+00, 4.000000e+00, 2.000000e+00,
-            2.000000e+00]])[0]})
+  return JsonResponse({'saleprediction': model.predict([data])[0]})
 
 
 @api_view(['GET'])
