@@ -174,13 +174,13 @@ class UserProfileViewSet(viewsets.ModelViewSet):
   serializer_class = UserProfileSerializer
   lookup_field = 'user'
 
-@api_view(['POST'])
+@api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def predictSalePrice(request,data):
+  data = [float(x) for x in data.split(';')]
+  print(data)
   file = open("dataproviderapp/trainedmodels/sale_price_prediction.pkl",'rb')
   model = pickle.load(file)
-  print(model.predict([[1.921320e+03, 6.000000e+00, 4.000000e+00, 2.000000e+00,
-            2.000000e+00]]))
   return JsonResponse({'saleprediction': model.predict([data])[0]})
 
 
