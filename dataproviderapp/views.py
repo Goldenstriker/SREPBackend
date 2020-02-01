@@ -217,3 +217,14 @@ def chartdata(request):
   property_type= data["Property_Type__Name"].value_counts()
   property_status = data["Property_Status__Name"].value_counts()
   return JsonResponse({"property_type":property_type.to_json(),"property_purpose": property_purpose.to_json(),"property_status":property_status.to_json(),"city_count":city_count.to_json()},safe=False)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def countdata(request):
+  data = pd.DataFrame(Property.objects.values('City__Name',  'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State__Name'))
+  city_count = data["City__Name"].value_counts()
+  state_count = data["State__Name"].value_counts()
+  property_purpose = data["Property_Purpose__Name"].value_counts()
+  property_type= data["Property_Type__Name"].value_counts()
+  property_status = data["Property_Status__Name"].value_counts()
+  return JsonResponse({"property_type":property_type.to_json(),"property_purpose": property_purpose.to_json(),"property_status":property_status.to_json(),"city_count":city_count.to_json(),"state_count":state_count.to_json()},safe=False)

@@ -28,6 +28,7 @@ urlpatterns = [
   path(r'recommend/<str:name>',views.recommend),
   path(r'predictSalePrice/<str:data>',views.predictSalePrice),
   path(r'chartdata/',views.chartdata),
+  path(r'countdata/', views.countdata),
   path(r'property/',views.PropertyFilterViewSet.as_view()),
   path(r'propertyforuser/',views.PropertyBasedOnUserViewSet.as_view()),
   path(r'properties/', views.PropertyViewSet.as_view()),
