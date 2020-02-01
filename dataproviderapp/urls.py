@@ -12,7 +12,7 @@ router.register(r'register',views.RegisterUserViewSet)
 router.register(r'country',views.CountryViewSet)
 router.register(r'state',views.StateViewSet)
 router.register(r'city',views.CityViewSet)
-router.register(r'properties',views.PropertyViewSet)
+#router.register(r'properties',views.PropertyViewSet)
 router.register(r'propertytype',views.PropertyTypeViewSet)
 router.register(r'propertystatus',views.PropertyStatusViewSet)
 router.register(r'propertypurpose',views.PropertyPurposeViewSet)
@@ -30,6 +30,8 @@ urlpatterns = [
   path(r'chartdata/',views.chartdata),
   path(r'property/',views.PropertyFilterViewSet.as_view()),
   path(r'propertyforuser/',views.PropertyBasedOnUserViewSet.as_view()),
+  path(r'properties/', views.PropertyViewSet.as_view()),
+  path(r'properties/<int:pk>/', views.PropertyViewSet.as_view())
   #path(r'userprofile/',views.UserProfileViewSet.as_view()),
   #predictSalePrice
 ]

@@ -14,6 +14,10 @@ from .models import UserProfile, Country
 import pickle, sklearn, pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 def index(request):
 	#userlist = User.objects.all().select_related('userprofile')
@@ -99,10 +103,33 @@ class CityViewSet(viewsets.ModelViewSet):
 	queryset = City.objects.all()
 	serializer_class = CitySerializer
 	
-class PropertyViewSet(viewsets.ModelViewSet):
-	permission_classes = [permissions.IsAuthenticated]
-	queryset = Property.objects.all()
-	serializer_class = PropertySerializer
+class PropertyViewSet(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Property.objects.all()
+    #serializer_class = PropertySerializer
+    def get_object(self, pk):
+      try:
+        return Property.objects.get(pk=pk)
+      except Property.DoesNotExist:
+        raise Http404
+
+    def get(self, request, pk, format=None):
+        property = self.get_object(pk)
+        serializer = PropertyDetailSerializer(property)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        property = self.get_object(pk)
+        serializer = PropertySerializer(property, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        property = self.get_object(pk)
+        property.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class PropertyTypeViewSet(viewsets.ModelViewSet):
 	permission_classes = [permissions.IsAuthenticated]
