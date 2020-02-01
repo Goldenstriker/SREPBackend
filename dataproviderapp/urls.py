@@ -25,7 +25,7 @@ urlpatterns = [
   path(r'api-token-refresh/', refresh_jwt_token),
   path(r'current_user/',views.current_user),
   path(r'set_user_status/<int:userid>',views.set_user_status),
-  path(r'recommend/',views.recommend),
+  path(r'recommend/<str:name>',views.recommend),
   path(r'predictSalePrice/<str:data>',views.predictSalePrice),
   path(r'chartdata/',views.chartdata),
   path(r'property/',views.PropertyFilterViewSet.as_view()),

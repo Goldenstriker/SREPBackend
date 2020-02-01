@@ -148,7 +148,7 @@ class PropertyPurposeViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
-def recommend(request):
+def recommend(request,name):
   data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City__Name', 'Country__Name', 'Name', 'Price', 'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State__Name'))
   data["Combination"] = data.astype(str).apply(' '.join, axis=1)
   print(data["Combination"])
@@ -160,7 +160,7 @@ def recommend(request):
   print(sim)
   # getting the index of the movie in the dataframe
   #i = data.loc[data.Combination.str.contains('Available',case=False)].index[0]
-  i = data.loc[data["Property_Status__Name"]=='Available'].index[0]
+  i = data.loc[data["Name"]== name].index[0]
   print(i)
   # fetching the row containing similarity scores of the movie
   # from similarity matrix and enumerate it
