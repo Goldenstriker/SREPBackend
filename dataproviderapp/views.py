@@ -149,26 +149,22 @@ class PropertyPurposeViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def recommend(request,name):
-  data = pd.DataFrame(Property.objects.values('Address', 'AreaSqFt', 'City__Name', 'Country__Name', 'Name', 'Price', 'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State__Name'))
+  data = pd.DataFrame(Property.objects.values('ID','Address', 'AreaSqFt', 'City__Name', 'Country__Name', 'Name', 'Price', 'Property_Purpose__Name', 'Property_Status__Name', 'Property_Type__Name', 'State__Name'))
   data["Combination"] = data.astype(str).apply(' '.join, axis=1)
-  print(data["Combination"])
   data.to_csv("data.csv")
   cv = CountVectorizer()
   count_matrix = cv.fit_transform(data['Combination'])
   # creating a similarity score matrix
   sim = cosine_similarity(count_matrix)
-  print(sim)
   # getting the index of the movie in the dataframe
   #i = data.loc[data.Combination.str.contains('Available',case=False)].index[0]
   i = data.loc[data["Name"]== name].index[0]
-  print(i)
   # fetching the row containing similarity scores of the movie
   # from similarity matrix and enumerate it
   lst = list(enumerate(sim[i]))
 
   # sorting this list in decreasing order based on the similarity score
   lst = sorted(lst, key = lambda x:x[1] ,reverse=True)
-  print(lst)
   # taking top 1- movie scores
   # not taking the first index since it is the same movie
   lst = lst[1:5]
@@ -177,7 +173,8 @@ def recommend(request,name):
   l = []
   for i in range(len(lst)):
       a = lst[i][0]
-      l.append(data['Name'][a])
+      print(data['ID'][a])
+      l.append({'name': data['Name'][a],'id':str(data['ID'][a])})
   return JsonResponse(l,safe=False)
 
 class PropertyFilterViewSet(generics.ListCreateAPIView):
