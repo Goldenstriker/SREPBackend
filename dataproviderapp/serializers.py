@@ -115,6 +115,7 @@ class PropertyDetailSerializer(serializers.ModelSerializer):
     Property_Purpose = PropertyPurposeSerializer()
     Property_Type = PropertyTypeSerializer()
     Property_Status = PropertyStatusSerializer()
+    UserCreatedBy = UserSerializer()
     class Meta:
       model = Property
       fields = ["ID","Name","Description","No_Of_BedRooms",
