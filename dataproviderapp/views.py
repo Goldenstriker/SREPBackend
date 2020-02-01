@@ -174,7 +174,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
   serializer_class = UserProfileSerializer
   lookup_field = 'user'
 
-@api_view(['GET'])
+@api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def predictSalePrice(request,data):
   data = [float(x) for x in data.split(';')]
