@@ -102,8 +102,14 @@ class CityViewSet(viewsets.ModelViewSet):
 	permission_classes = [permissions.IsAuthenticated]
 	queryset = City.objects.all()
 	serializer_class = CitySerializer
-	
-class PropertyViewSet(APIView):
+
+class PropertyViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
+
+
+class PropertyDataViewSet(APIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Property.objects.all()
     #serializer_class = PropertySerializer
